@@ -19,6 +19,8 @@ export class UserService {
                 newEmail,
                 '00 90000-0000'
             );
+
+            this.users.push( newUser );
         })
     }
 

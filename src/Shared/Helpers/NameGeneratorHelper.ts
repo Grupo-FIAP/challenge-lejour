@@ -12,11 +12,14 @@ export default class NameGeneratorHelper {
         let finalName = '';
         let namesArray: string[] = [];
 
-        switch( genre ) {
+        switch( finalGenre ) {
             case 1:
                 namesArray = this.firstnamesF;
                 break;
             case 2:
+                namesArray = this.firstnamesM;
+                break;
+            default:
                 namesArray = this.firstnamesM;
                 break;
         }
@@ -34,9 +37,9 @@ export default class NameGeneratorHelper {
     public static GetEmailFromName( name: string ) {
         let finalEmail = '';
 
-        const emailDomain = this.emailDomains[ Math.random() * this.emailDomains.length ];
+        const emailDomain = this.emailDomains[ Math.floor( Math.random() * this.emailDomains.length )];
         finalEmail = name.trim().toLowerCase().replaceAll(' ', '') + '@' + emailDomain;
-        
+
         return finalEmail;
     }
 }

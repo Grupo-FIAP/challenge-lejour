@@ -20,6 +20,7 @@ import { WeddingService } from '../../Shared/Services/WeddingService';
 import { InvoiceService } from '../../Shared/Services/InvoiceService';
 import { FavoritesService } from '../../Shared/Services/FavoritesService';
 import { AppointmentService } from '../../Shared/Services/AppointmentService';
+import { UserModel } from '../../Shared/Models/user';
 
 export default class Dashboard extends Component {
 
@@ -27,8 +28,8 @@ export default class Dashboard extends Component {
 
     // Referente a usuários
     userService: UserService;
-    totalUsers;
-    last10Users;
+    totalUsers: number = 0;
+    last10Users: UserModel[] = [];
 
     // Referente a casamentos
     weddingService: WeddingService;
@@ -79,23 +80,31 @@ export default class Dashboard extends Component {
                 datasets: [{
                         label: 'Casamentos',
                         data: randomNumbers( 6, 50, 5 ),
-                        backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.1, true ).toString(),
-                        borderColor: ChartColors[colorIndex]
+                        // borderColor: ChartColors[colorIndex],
+                        borderColor: ChartColors[colorIndex++],
+                        // backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.2, true ).toString(),
+                        backgroundColor: 'transparent'
                     },{
                         label: 'Usuários',
                         data: randomNumbers( 6, 150, 10 ),
-                        backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.1, true ).toString(),
-                        borderColor: ChartColors[colorIndex]
+                        // borderColor: ChartColors[colorIndex],
+                        borderColor: ChartColors[colorIndex++],
+                        // backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.2, true ).toString(),
+                        backgroundColor: 'transparent'
                     },{
                         label: 'Fornecedores',
                         data: randomNumbers( 6, 150, 10 ),
-                        backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.1, true ).toString(),
-                        borderColor: ChartColors[colorIndex]
+                        // borderColor: ChartColors[colorIndex],
+                        borderColor: ChartColors[colorIndex++],
+                        // backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.2, true ).toString(),
+                        backgroundColor: 'transparent'
                     },{
                         label: 'Vendas',
                         data: randomNumbers( 6, 150, 10 ),
-                        backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.1, true ).toString(),
-                        borderColor: ChartColors[colorIndex]
+                        // borderColor: ChartColors[colorIndex],
+                        borderColor: ChartColors[colorIndex++],
+                        // backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.2, true ).toString(),
+                        backgroundColor: 'transparent'
                     }
                 ],
             },
@@ -106,9 +115,52 @@ export default class Dashboard extends Component {
         
     }
 
+    /**
+     * Funções referentes a usuários
+     */
     setupUsersData() {
         this.totalUsers = this.userService.GetCount();
         this.last10Users = this.userService.GetLast10();
+
+        console.log( this.last10Users );
+    }
+
+    renderLastUsers() {
+        let html;
+
+        // <thead>
+        //     <tr>
+        //         <th>#</th>
+        //         <th>Nome</th>
+        //         <th>E-mail</th>
+        //         <th>Telefone</th>
+        //         <th>Origem</th>
+        //     </tr>
+        // </thead>
+
+        // this.last10Users.forEach(x => {
+        //     html += <tr>
+        //         <td>{x.Id}</td>
+        //         <td>{x.Name}</td>
+        //         <td>{x.Username}</td>
+        //         <td>{x.Phone}</td>
+        //         <td>{x.CreatedAt}</td>
+        //     </tr>
+
+        // });
+        return this.last10Users.map( user => {
+            const { Id, Name, Username, CreatedAt, Phone } = user;
+
+            return (
+                <tr>
+                    <td>{Id}</td>
+                    <td>{Name}</td>
+                    <td>{Username}</td>
+                    <td>{Phone}</td>
+                    <td>{CreatedAt}</td>
+                </tr>
+            )
+        });
     }
 
     setupWeddingsData() {
@@ -189,29 +241,13 @@ export default class Dashboard extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>0</td>
-                                        <td>Nome Exemplo</td>
-                                        <td>email@teste.com</td>
-                                        <td>11 99887-5544</td>
-                                        <td>Google Adwords</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Nome Exemplo</td>
-                                        <td>email@teste.com</td>
-                                        <td>11 99887-5544</td>
-                                        <td>Google Adwords</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Nome Exemplo</td>
-                                        <td>email@teste.com</td>
-                                        <td>11 99887-5544</td>
-                                        <td>Google Adwords</td>
-                                    </tr>
+                                    { this.renderLastUsers() }
                                 </tbody>
                             </table>
+                            <div className="spacer-3"></div>
+                            <div className="has-text-right">
+                                <button className="button is-primary">Ver todos os dados de usuários</button>
+                            </div>
                         </Box>
                         <Box title='Casamentos próximos' customStyle={{ gridColumn: "3 / span 2" }}>
                         <table className='table'>

@@ -5,6 +5,7 @@ import Dashboard from './Pages/Dashboard/Dashboard';
 import Usuarios from './Pages/Usuarios/Usuarios';
 import Fornecedores from './Pages/Fornecedores/Fornecedores';
 import Casamentos from './Pages/Casamentos/Casamentos';
+import Vendas from './Pages/Vendas/Vendas';
 
 import React, { Component } from 'react'
 
@@ -19,6 +20,7 @@ export default class App extends Component {
             <Route path='/usuarios' component={Usuarios} exact/>
             <Route path='/casamentos' component={Casamentos} exact/>
             <Route path='/fornecedores' component={Fornecedores} exact/>
+            <Route path='/vendas' component={Vendas} exact/>
           </Switch>
         </Router>
       </>
