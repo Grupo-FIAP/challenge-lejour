@@ -5,8 +5,8 @@ export class AppointmentModel {
         public VendorId,
         public Status,
         public VendorCategory,
-        public BeginsAt,
-        public CreatedAt
+        public BeginsAt: Date,
+        public CreatedAt: Date
     ) {
     }
 }

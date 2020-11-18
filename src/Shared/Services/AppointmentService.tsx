@@ -14,12 +14,12 @@ export class AppointmentService {
                 x.VENDOR_ID,
                 x.STATUS,
                 x.VENDOR_CATEGORY,
-                x.BEGINS_AT,
-                x.CREATED_AT
+                new Date(x.BEGINS_AT),
+                new Date(x.CREATED_AT)
             );
 
             return newAppointment;
-        });
+        }).sort( (a, b) => b.CreatedAt.getTime() - a.CreatedAt.getTime());
     }
 
     GetCount() {
