@@ -29,4 +29,14 @@ export class AppointmentService {
     GetLast10() {
         return this.appointment.slice( 0, 10 );
     }
+
+    GetByMonth( month, year ) {
+        const appointmentsByMonth = this.appointment.filter(
+            x => x.CreatedAt.getMonth() === month 
+                && x.CreatedAt.getFullYear() === year
+                && x.Status === "CONFIRMED"
+        );
+
+        return appointmentsByMonth;
+    }
 }

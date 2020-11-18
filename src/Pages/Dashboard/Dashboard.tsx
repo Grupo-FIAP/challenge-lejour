@@ -85,9 +85,12 @@ export default class Dashboard extends Component {
         }
         let colorIndex = 0;
 
-        // Faturamento por mes
 
         const invoicePerMonth: any[] = [];
+        const usersPerMonth: any[] = [];
+        const appointmentsPerMonth: any[] = [];
+        const weddingsPerMonth: any[] = [];
+
         lastMonths.forEach( x => {
             let invoicesMonth:InvoiceModel[] = [];
             let valueThisMonth = 0;
@@ -98,16 +101,52 @@ export default class Dashboard extends Component {
                 valueThisMonth += x.Amount;
             });
 
-            const thisMonth = {
+            const currentInvoiceMonth = {
                 month: x.month,
                 year: x.year,
                 value: valueThisMonth,
                 quantity: invoicesQuantity
             };
             
-            invoicePerMonth.push( thisMonth );
+            invoicePerMonth.push( currentInvoiceMonth );
+
+            // users
+            let usersMonth: UserModel[] = this.userService.GetByMonth( x.month, x.year );
+            let userQuantity = usersMonth.length;
+            const currentUserMonth = {
+                month: x.month,
+                year: x.year,
+                value: userQuantity
+            }
+            usersPerMonth.push( currentUserMonth );
+
+            // appointments
+            let appointmentsMonth: AppointmentModel[] = this.appointmentService.GetByMonth( x.month, x.year );
+            let appointmentQuantity = appointmentsMonth.length;
+            const currentappointmentMonth = {
+                month: x.month,
+                year: x.year,
+                value: appointmentQuantity
+            }
+            appointmentsPerMonth.push( currentappointmentMonth );
+
+            // weddings
+            let weddingsMonth: WeddingModel[] = this.weddingService.GetByMonth( x.month, x.year );
+            let weddingQuantity = weddingsMonth.length;
+            const currentweddingMonth = {
+                month: x.month,
+                year: x.year,
+                value: weddingQuantity
+            }
+            weddingsPerMonth.push( currentweddingMonth );
         });
+
+        console.log( usersPerMonth );
+
         const invoiceChartData = invoicePerMonth.map( x => x.quantity );
+        const usersChartData = usersPerMonth.map( x => x.value );
+        const appointmentChartData = appointmentsPerMonth.map( x => x.value );
+        const weddingChartData = weddingsPerMonth.map( x => x.value );
         
 
         const chart = new Chart(this.chartRef.current, {
@@ -115,32 +154,24 @@ export default class Dashboard extends Component {
             data: {
                 labels: lastMonths.map( x => { return x.monthName + '/' + x.year} ),
                 datasets: [{
-                    label: 'Casamentos',
-                    data: randomNumbers(6, 50, 5),
-                    // borderColor: ChartColors[colorIndex],
+                    label: 'Casamentos Realizados',
+                    data: weddingChartData,
                     borderColor: ChartColors[colorIndex++],
-                    // backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.2, true ).toString(),
                     backgroundColor: 'transparent'
                 }, {
-                    label: 'Usuários',
-                    data: randomNumbers(6, 150, 10),
-                    // borderColor: ChartColors[colorIndex],
+                    label: 'Usuários Cadastrados',
+                    data: usersChartData,
                     borderColor: ChartColors[colorIndex++],
-                    // backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.2, true ).toString(),
                     backgroundColor: 'transparent'
                 }, {
-                    label: 'Fornecedores',
-                    data: randomNumbers(6, 150, 10),
-                    // borderColor: ChartColors[colorIndex],
+                    label: 'Agendamentos finalizados',
+                    data: appointmentChartData,
                     borderColor: ChartColors[colorIndex++],
-                    // backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.2, true ).toString(),
                     backgroundColor: 'transparent'
                 }, {
                     label: 'Faturamentos concretizados',
                     data: invoiceChartData,
-                    // borderColor: ChartColors[colorIndex],
                     borderColor: ChartColors[colorIndex++],
-                    // backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.2, true ).toString(),
                     backgroundColor: 'transparent'
                 }
                 ],
@@ -320,7 +351,7 @@ export default class Dashboard extends Component {
                         <div className="spacer-3"></div>
                         <div className="has-text-right">
                             <Link to='/usuarios'>
-                                <button className="button is-primary">Ver todos os dados de usuários</button>
+                                <button className="button is-primary">Ver todos os dados de Usuários</button>
                             </Link>
                         </div>
                     </Box>
@@ -342,13 +373,13 @@ export default class Dashboard extends Component {
                         <div className="spacer-3"></div>
                         <div className="has-text-right">
                             <Link to='/casamentos'>
-                                <button className="button is-primary">Ver todos os dados de casamentos</button>
+                                <button className="button is-primary">Ver todos os dados de Casamentos</button>
                             </Link>
                         </div>
                     </Box>
                 </div>
 
-                <div className="columns cols-3">
+                <div className="columns cols-2">
                     <Box title='Agendamentos próximos'>
                         <table className='table'>
                             <thead>
@@ -365,7 +396,7 @@ export default class Dashboard extends Component {
                         </table>
                         <div className="spacer-3"></div>
                         <div className="has-text-right">
-                            <Link to='/casamentos'>
+                            <Link to='/agendamentos'>
                                 <button className="button is-primary">Ver todos os dados de Agendamentos</button>
                             </Link>
                         </div>
@@ -388,12 +419,11 @@ export default class Dashboard extends Component {
                         </table>
                         <div className="spacer-3"></div>
                         <div className="has-text-right">
-                            <Link to='/casamentos'>
-                                <button className="button is-primary">Ver todos os dados de casamentos</button>
+                            <Link to='/vendas'>
+                                <button className="button is-primary">Ver todos os dados de Vendas</button>
                             </Link>
                         </div>
                     </Box>
-                    <Box title='Tabela 3'></Box>
                 </div>
             </DashboardViewport>
         )

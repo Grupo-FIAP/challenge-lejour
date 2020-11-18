@@ -44,4 +44,13 @@ export class UserService {
     GetLast10() {
         return this.users.slice( 0, 10 );
     }
+
+    GetByMonth( month, year ) {
+        const usersByMonth = this.users.filter(
+            x => x.CreatedAt.getMonth() === month 
+                && x.CreatedAt.getFullYear() === year
+        );
+
+        return usersByMonth;
+    }
 }

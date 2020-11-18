@@ -29,4 +29,13 @@ export class WeddingService {
     GetLast10() {
         return this.weddings.slice( 0, 10 );
     }
+
+    GetByMonth( month, year ) {
+        const weddingsByMonth = this.weddings.filter(
+            x => x.WeddingDate.getMonth() === month
+                && x.WeddingDate.getFullYear() === year
+        );
+
+        return weddingsByMonth;
+    }
 }
