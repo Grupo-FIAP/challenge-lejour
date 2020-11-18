@@ -1,4 +1,5 @@
 import React, { Component, createRef, Ref, RefObject } from 'react'
+import { Link } from 'react-router-dom';
 
 // Importação de Icones e SVGs
 import IconeNoivos from '../../assets/icons/icone_noivos.svg';
@@ -21,6 +22,7 @@ import { InvoiceService } from '../../Shared/Services/InvoiceService';
 import { FavoritesService } from '../../Shared/Services/FavoritesService';
 import { AppointmentService } from '../../Shared/Services/AppointmentService';
 import { UserModel } from '../../Shared/Models/user';
+import DashboardViewport from '../../Components/Layout/DashboardViewport';
 
 export default class Dashboard extends Component {
 
@@ -200,11 +202,8 @@ export default class Dashboard extends Component {
         this.setupFavoritesData();
 
         return (
-            <>
-                <Menu/>
-                <div className="dashboard-viewport">
-                    <h1>Visão Geral</h1>
-                    <Breadcrumb></Breadcrumb>
+
+            <DashboardViewport title="Visão Geral">
                     <div className="columns cols-4">
                         <MetricOverview data={{ stat: 'R$ ' + this.totalInvoices.toFixed(2), about: 'Vendas Feitas' }} icon={IconeOrcamento} name='Vendas' link='/vendas'></MetricOverview>
                         <MetricOverview data={{ stat: this.totalWeddings, about: 'Casamentos Realizados' }} icon={IconeCerimonia} name='casamentos' link='/casamentos'></MetricOverview>
@@ -246,7 +245,9 @@ export default class Dashboard extends Component {
                             </table>
                             <div className="spacer-3"></div>
                             <div className="has-text-right">
-                                <button className="button is-primary">Ver todos os dados de usuários</button>
+                                <Link to='/usuarios'>
+                                    <button className="button is-primary">Ver todos os dados de usuários</button>
+                                </Link>
                             </div>
                         </Box>
                         <Box title='Casamentos próximos' customStyle={{ gridColumn: "3 / span 2" }}>
@@ -292,8 +293,7 @@ export default class Dashboard extends Component {
                         <Box title='Tabela 2'></Box>
                         <Box title='Tabela 3'></Box>
                     </div>
-                </div>
-            </>
+            </DashboardViewport>
         )
     }
 }

@@ -21,6 +21,9 @@ export default class Menu extends Component {
                         <Link to='/fornecedores'>
                             <li>Fornecedores</li>
                         </Link>
+                        <Link to='/vendas'>
+                            <li>Vendas</li>
+                        </Link>
                     </ul>
                 </div>
                 <div>
