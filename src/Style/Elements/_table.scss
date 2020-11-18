@@ -1,0 +1,22 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+        text-align: left;
+        
+    }
+
+    tr {
+        line-height: 30px;
+    }
+
+    tbody {
+        tr {
+            td {
+               border-bottom: 2px solid #f9f9f9;
+            }
+
+        }
+    }
+}

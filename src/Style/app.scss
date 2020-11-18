@@ -1,0 +1,65 @@
+@mixin default-box-shadow {
+    box-shadow: 0 0 2px rgba(66,66,66,.05), 0 0 4px rgba(97,97,97,.05), 0 0 8px rgba(66,66,66,.05), 0 0 16px rgba(33,33,33,.05), 0 0 32px rgba(97,97,97,.05);
+}
+
+@import './Helpers/colors';
+@import './Helpers/text';
+@import './globals';
+@import './Elements/elements.scss';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body, #root {
+    height: 100vh;
+}
+
+body {
+    background-color: $color-branco;
+}
+
+#root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body,
+input,
+button,
+textarea {
+    font: 500 1.6rem Lato;
+    @include color-base( 4, 1 );
+}
+
+.container {
+    width: 90vw;
+    max-width: 700px;
+}
+
+@media (min-width: 700px) {
+    :root {
+        font-size: 62.5%;
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 2.5rem;
+    font-family: Merriweather;
+}
+
+a[href] {
+    text-decoration: none;
+}
+
+p {
+    margin-bottom: 1.5rem;
+}
+
+@import './Components/components.scss';
+@import './Form/form';
+@import './Pages/login';
+

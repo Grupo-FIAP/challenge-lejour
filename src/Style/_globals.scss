@@ -1,0 +1,46 @@
+$default-border-radius: 32px;
+
+.background {
+
+    &-goiaba {
+        background-color: $color-goiaba;
+    }
+}
+
+.background-fullsize {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.spacer {
+    $spacer-size: 1.2rem;
+    display: block;
+
+    &-1 {
+        @extend .spacer;
+        height: $spacer-size * 1;
+        width: 100%;
+    }
+
+    &-2 {
+        @extend .spacer;
+        height: $spacer-size * 2;
+        width: 100%;
+    }
+
+    &-3 {
+        @extend .spacer;
+        height: $spacer-size * 3;
+        width: 100%;
+    }
+
+    &-4 {
+        @extend .spacer;
+        height: $spacer-size * 4;
+        width: 100%;
+    }
+}

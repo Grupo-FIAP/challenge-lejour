@@ -1,0 +1,29 @@
+.dashboard-viewport {
+    width: 90vw;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+}
+
+.columns {
+    display: grid;
+    // grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 20px;
+
+    &.cols-2 {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    &.cols-3 {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    &.cols-4 {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+
+    &.cols-6 {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}

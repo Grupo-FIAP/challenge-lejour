@@ -1,0 +1,53 @@
+.metric-overview {
+    $default-padding: 2rem;
+    margin-bottom: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    @include default-box-shadow;
+    border-radius: 30px;
+    width: 100%;
+    background-color: #fff;
+
+    .info {
+        display: flex;
+        padding: $default-padding;
+        justify-content: center;
+        align-items: center;
+        
+        .icon {
+            display: block;
+            height: 60px;
+            width: 60px;
+
+            img {
+                object-fit: contain;
+                object-position: center;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .data {
+            margin-left: 3rem;
+
+            .stat {
+                font-size: 1.5em;
+                font-weight: bolder;
+                font-family: Lato;
+                color: $color-goiaba;
+            }
+
+            .about {
+                font-weight: bold;
+                font-size: 0.8em;
+                margin-top: 1rem;
+            }
+        }
+    }
+
+    .actions {
+        border-top: 1px solid #f2f2f2;
+        padding: $default-padding;
+    }
+}

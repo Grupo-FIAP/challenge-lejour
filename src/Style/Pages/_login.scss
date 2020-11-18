@@ -1,0 +1,40 @@
+
+
+.login {
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    @include default-box-shadow;
+
+    width: 80vw;
+    height: 60vh;
+    max-width: 1200px;
+
+    display: flex;
+    flex-direction: row;
+
+    &-form {
+        padding: 5rem;
+        flex-grow: 1;
+
+        .logo-login {
+            width: 50px;
+        }
+    }
+
+    &-illustration {
+        background-color: $color-goiaba;
+        height: 100%;
+        width: 40rem;
+        overflow: hidden;
+        position: relative;
+        
+        img {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+}

@@ -1,0 +1,11 @@
+.box {
+    padding: 3rem;
+    border-radius: $default-border-radius;
+    @include default-box-shadow;
+    margin-bottom: 2rem;
+
+    &.transparent {
+        background: transparent;
+        box-shadow: none;
+    }
+}

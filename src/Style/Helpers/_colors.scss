@@ -1,0 +1,33 @@
+$color-goiaba: #E2645A;
+$color-branco: #ffffff;
+$color-verde-agua: #86D0CB;
+
+@mixin color-base( $dark, $opacity ) {
+    @if( $dark == 4 ) {
+        color: rgba( 88, 88, 88, $opacity );
+    }
+
+    @if( $dark == 3 ) {
+        color: rgba( 155, 154, 154, $opacity );
+    }
+
+    @if( $dark == 2 ) {
+        color: rgba( 186, 186, 186, $opacity );
+    }
+
+    @if( $dark == 1 ) {
+        color: rgba( 220, 219, 219, $opacity );
+    }
+}
+
+@mixin goiaba-gradient() {
+    background: rgb(226,100,90);
+    background: -moz-linear-gradient(90deg, rgba(226,100,90,1) 0%, rgba(219,93,121,1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(226,100,90,1) 0%, rgba(219,93,121,1) 100%);
+    background: linear-gradient(90deg, rgba(226,100,90,1) 0%, rgba(219,93,121,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e2645a",endColorstr="#db5d79",GradientType=1);
+}
+
+a:visited {
+    color: inherit;
+}

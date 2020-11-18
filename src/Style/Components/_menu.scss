@@ -1,0 +1,25 @@
+.dashboard-main-menu {
+    display: flex;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    padding: 1rem;
+    color: $color-branco;
+    background-color: $color-goiaba;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+
+    .links {
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+
+        li {
+            display: inline-block;
+            margin-right: 1.2rem;
+        }
+    }
+}
