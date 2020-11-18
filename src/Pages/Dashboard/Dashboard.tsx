@@ -16,13 +16,36 @@ import ChartColors from '../../Shared/Helpers/ChartColors';
 import GoalBar from '../../Components/Layout/GoalBar';
 import ColorHelper from '../../Shared/Helpers/ColorHelper';
 import { UserService } from '../../Shared/Services/UserService';
+import { WeddingService } from '../../Shared/Services/WeddingService';
+import { InvoiceService } from '../../Shared/Services/InvoiceService';
+import { FavoritesService } from '../../Shared/Services/FavoritesService';
+import { AppointmentService } from '../../Shared/Services/AppointmentService';
 
 export default class Dashboard extends Component {
 
     chartRef;
 
-    totalUsers;
+    // Referente a usuários
     userService: UserService;
+    totalUsers;
+    last10Users;
+
+    // Referente a casamentos
+    weddingService: WeddingService;
+    totalWeddings;
+
+    // Referente a invoice
+    invoiceService: InvoiceService;
+    totalInvoices;
+
+    // Referente a favoritos
+    favoritesService: FavoritesService;
+    totalFavorites;
+
+    // Referente a agendamentos
+    appointmentService: AppointmentService;
+    totalAppointments;
+
 
     constructor(props) {
         super(props);
@@ -30,7 +53,10 @@ export default class Dashboard extends Component {
         this.chartRef = React.createRef();
 
         this.userService = new UserService();
-
+        this.weddingService = new WeddingService();
+        this.invoiceService = new InvoiceService();
+        this.favoritesService = new FavoritesService();
+        this.appointmentService = new AppointmentService();
     }
 
     componentDidMount() {
@@ -82,18 +108,23 @@ export default class Dashboard extends Component {
 
     setupUsersData() {
         this.totalUsers = this.userService.GetCount();
+        this.last10Users = this.userService.GetLast10();
     }
 
     setupWeddingsData() {
-        
+        this.totalWeddings = this.weddingService.GetCount();
     }
 
     setupInvoicesData() {
-
+        this.totalInvoices = this.invoiceService.GetTotalAmount();
     }
 
     setupAppointmentsData() {
+        this.totalAppointments = this.appointmentService.GetCount();
+    }
 
+    setupFavoritesData() {
+        this.totalFavorites = this.favoritesService.GetCount();
     }
 
     render() {
@@ -114,6 +145,7 @@ export default class Dashboard extends Component {
         this.setupWeddingsData();
         this.setupInvoicesData();
         this.setupAppointmentsData();
+        this.setupFavoritesData();
 
         return (
             <>
@@ -122,10 +154,10 @@ export default class Dashboard extends Component {
                     <h1>Visão Geral</h1>
                     <Breadcrumb></Breadcrumb>
                     <div className="columns cols-4">
+                        <MetricOverview data={{ stat: 'R$ ' + this.totalInvoices.toFixed(2), about: 'Vendas Feitas' }} icon={IconeOrcamento} name='Vendas' link='/vendas'></MetricOverview>
+                        <MetricOverview data={{ stat: this.totalWeddings, about: 'Casamentos Realizados' }} icon={IconeCerimonia} name='casamentos' link='/casamentos'></MetricOverview>
                         <MetricOverview data={{ stat: this.totalUsers, about: 'Usuários Cadastrados' }} icon={IconeNoivos} name='usuários' link='/usuarios'></MetricOverview>
-                        <MetricOverview data={{ stat: 230, about: 'Casamentos Realizados' }} icon={IconeCerimonia} name='casamentos' link='/casamentos'></MetricOverview>
                         <MetricOverview data={{ stat: 58, about: 'Fornecedores Cadastrados' }} icon={IconeFornecedores} name='fornecedores' link='/fornecedores'></MetricOverview>
-                        <MetricOverview data={{ stat: 'R$ 20.000,00', about: 'Vendas Feitas' }} icon={IconeOrcamento} name='Vendas' link='/vendas'></MetricOverview>
                     </div>
                     
                     <div className="columns cols-3">
@@ -134,7 +166,7 @@ export default class Dashboard extends Component {
                         </Box>
                         <Box title='Metas' transparent>
                             <h4>Metas de 2020</h4>
-                            <GoalBar goalName='Faturamento total' goal={50000} goalCurrent={rnd(40000, 10000, false)} isCurrency={{ digits: 2, preffix: 'R$' }} ></GoalBar>
+                            <GoalBar goalName='Faturamento total' goal={3000000} goalCurrent={ this.totalInvoices } isCurrency={{ digits: 2, preffix: 'R$' }} ></GoalBar>
                             <div className="spacer-1"></div>
                             <h4>Metas de Novembro</h4>
                             <GoalBar goalName='Casamentos realizados' goal={50} goalCurrent={rnd(50, 10)} ></GoalBar>

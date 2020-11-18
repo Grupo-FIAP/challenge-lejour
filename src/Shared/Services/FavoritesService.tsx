@@ -1,6 +1,6 @@
 import FavoritesData from '../../requests/users.json';
 
-export class UserService {
+export class FavoritesService {
 
     private favorites: any[];
 

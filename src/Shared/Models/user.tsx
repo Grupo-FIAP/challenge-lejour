@@ -1,6 +1,9 @@
 export class UserModel {
-    USERNAME;
-    EMAIL;
-    ID;
-    CREATED_AT;
+    constructor(
+        public Id,
+        public CreatedAt,
+        public Name,
+        public Username,
+        public Phone
+    ){}
 }
