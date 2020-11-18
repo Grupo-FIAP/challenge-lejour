@@ -15,16 +15,22 @@ import { DateHelper } from '../../Shared/Helpers/DateHelper';
 import ChartColors from '../../Shared/Helpers/ChartColors';
 import GoalBar from '../../Components/Layout/GoalBar';
 import ColorHelper from '../../Shared/Helpers/ColorHelper';
-
+import { UserService } from '../../Shared/Services/UserService';
 
 export default class Dashboard extends Component {
 
     chartRef;
 
+    totalUsers;
+    userService: UserService;
+
     constructor(props) {
         super(props);
 
         this.chartRef = React.createRef();
+
+        this.userService = new UserService();
+
     }
 
     componentDidMount() {
@@ -71,19 +77,23 @@ export default class Dashboard extends Component {
             }
         } );
 
-        const query_params = new URLSearchParams({
-            'limit': 10
-          });
-          var url = 'https://sheet2api.com/v1/ByR2h1huRjyQ/fiap/user?' + query_params;
-          
-          fetch(url)
-            .then(response => response.json())
-            .then(data => {
-              console.log('Success:', data);
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
+        
+    }
+
+    setupUsersData() {
+        this.totalUsers = this.userService.GetCount();
+    }
+
+    setupWeddingsData() {
+        
+    }
+
+    setupInvoicesData() {
+
+    }
+
+    setupAppointmentsData() {
+
     }
 
     render() {
@@ -100,6 +110,11 @@ export default class Dashboard extends Component {
             return result;
         }
 
+        this.setupUsersData();
+        this.setupWeddingsData();
+        this.setupInvoicesData();
+        this.setupAppointmentsData();
+
         return (
             <>
                 <Menu/>
@@ -107,7 +122,7 @@ export default class Dashboard extends Component {
                     <h1>Visão Geral</h1>
                     <Breadcrumb></Breadcrumb>
                     <div className="columns cols-4">
-                        <MetricOverview data={{ stat: 533, about: 'Usuários Cadastrados' }} icon={IconeNoivos} name='usuários' link='/usuarios'></MetricOverview>
+                        <MetricOverview data={{ stat: this.totalUsers, about: 'Usuários Cadastrados' }} icon={IconeNoivos} name='usuários' link='/usuarios'></MetricOverview>
                         <MetricOverview data={{ stat: 230, about: 'Casamentos Realizados' }} icon={IconeCerimonia} name='casamentos' link='/casamentos'></MetricOverview>
                         <MetricOverview data={{ stat: 58, about: 'Fornecedores Cadastrados' }} icon={IconeFornecedores} name='fornecedores' link='/fornecedores'></MetricOverview>
                         <MetricOverview data={{ stat: 'R$ 20.000,00', about: 'Vendas Feitas' }} icon={IconeOrcamento} name='Vendas' link='/vendas'></MetricOverview>
