@@ -25,6 +25,8 @@ import { UserModel } from '../../Shared/Models/user';
 import DashboardViewport from '../../Components/Layout/DashboardViewport';
 import { WeddingModel } from '../../Shared/Models/wedding';
 import { AppointmentModel } from '../../Shared/Models/appointment';
+import { InvoiceModel } from '../../Shared/Models/invoice';
+import { FormatHelper } from '../../Shared/Helpers/FormatHelper';
 
 export default class Dashboard extends Component {
 
@@ -43,6 +45,7 @@ export default class Dashboard extends Component {
     // Referente a invoice
     invoiceService: InvoiceService;
     totalInvoices;
+    lastInvoices: InvoiceModel[] = [];
 
     // Referente a favoritos
     favoritesService: FavoritesService;
@@ -67,6 +70,9 @@ export default class Dashboard extends Component {
     }
 
     componentDidMount() {
+        const lastMonths = DateHelper.GetLastMonthsObject(6, true);
+
+
         const last6Months = DateHelper.GetLastMonths(6, true);
         const randomNumbers = (quantity, range, minimum = 0) => {
             const result: number[] = [];
@@ -79,10 +85,33 @@ export default class Dashboard extends Component {
         }
         let colorIndex = 0;
 
+        // Faturamento por mes
+
+        const invoicePerMonth: any[] = [];
+        lastMonths.forEach( x => {
+            let invoicesMonth:InvoiceModel[] = [];
+            let valueThisMonth = 0;
+
+            invoicesMonth = this.invoiceService.GetByMonth( x.month, x.year );
+            invoicesMonth.forEach( x => {
+                valueThisMonth += x.Amount;
+            });
+
+            const thisMonth = {
+                month: x.month,
+                year: x.year,
+                value: valueThisMonth
+            };
+            
+            invoicePerMonth.push( thisMonth );
+        });
+        console.log( invoicePerMonth );
+        
+
         const chart = new Chart(this.chartRef.current, {
             type: 'line',
             data: {
-                labels: last6Months,
+                labels: lastMonths.map( x => { return x.monthName + '/' + x.year} ),
                 datasets: [{
                     label: 'Casamentos',
                     data: randomNumbers(6, 50, 5),
@@ -105,8 +134,8 @@ export default class Dashboard extends Component {
                     // backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.2, true ).toString(),
                     backgroundColor: 'transparent'
                 }, {
-                    label: 'Vendas',
-                    data: randomNumbers(6, 150, 10),
+                    label: 'Faturamento',
+                    data: invoicePerMonth.map( x => x.value ),
                     // borderColor: ChartColors[colorIndex],
                     borderColor: ChartColors[colorIndex++],
                     // backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.2, true ).toString(),
@@ -127,8 +156,6 @@ export default class Dashboard extends Component {
     setupUsersData() {
         this.totalUsers = this.userService.GetCount();
         this.last10Users = this.userService.GetLast10();
-
-        console.log(this.last10Users);
     }
 
     renderLastUsers() {
@@ -157,22 +184,45 @@ export default class Dashboard extends Component {
 
     renderNextWeddings() {
         return this.nextWeddings.map((wedding: WeddingModel) => {
-            const { Id, Couple, WeddingDate } = wedding;
+            const { Id, WeddingDate, Style, OwnerId } = wedding;
 
             return (
                 <tr>
                     <td>{Id}</td>
                     <td>{WeddingDate.toLocaleDateString()}</td>
                     <td>{wedding.GetCoupleName()}</td>
-                    <td>Local</td>
-                    <td>Fornecedor</td>
+                    <td>{Style}</td>
+                    <td>{OwnerId}</td>
                 </tr>
             )
         });
     }
 
+
+    /**
+     * Referente a invoices
+     */
     setupInvoicesData() {
         this.totalInvoices = this.invoiceService.GetTotalAmount();
+        this.lastInvoices = this.invoiceService.GetLast10();
+    }
+
+    renderLastInvoices() {
+
+        return this.lastInvoices.map( (invoice: InvoiceModel) => {
+            const { Id, WeddingId, Accepted, CreatedAt, Amount, VendorAmount, VendorCategory  } = invoice;
+
+            return (
+                <tr>
+                    <td>{Id}</td>
+                    <td>{CreatedAt.toLocaleDateString()}</td>
+                    <td>{FormatHelper.CurrencyFormat(Amount)}</td>
+                    <td>{FormatHelper.CurrencyFormat(VendorAmount)}</td>
+                    <td>{VendorCategory}</td>
+                    <td>{WeddingId}</td>
+                </tr>
+            )
+        });
     }
 
     /**
@@ -184,7 +234,7 @@ export default class Dashboard extends Component {
     }
 
     renderNextAppointments() {
-        return this.nextAppointments.map( appointment => {
+        return this.nextAppointments.map(appointment => {
             const { Id, CreatedAt, Status, BeginsAt, WeddingId } = appointment;
 
             return (
@@ -206,8 +256,6 @@ export default class Dashboard extends Component {
     }
 
     render() {
-        const breadcrumbRoute = [];
-
         const rnd = (range, minimum = 0, round = true) => {
             let result: number = minimum;
             result += Math.random() * range
@@ -229,7 +277,7 @@ export default class Dashboard extends Component {
 
             <DashboardViewport title="Visão Geral">
                 <div className="columns cols-4">
-                    <MetricOverview data={{ stat: 'R$ ' + this.totalInvoices.toFixed(2), about: 'Vendas Feitas' }} icon={IconeOrcamento} name='Vendas' link='/vendas'></MetricOverview>
+                    <MetricOverview data={{ stat: 'R$ ' + this.totalInvoices.toFixed(2), about: 'em Vendas Totais' }} icon={IconeOrcamento} name='Vendas' link='/vendas'></MetricOverview>
                     <MetricOverview data={{ stat: this.totalWeddings, about: 'Casamentos Realizados' }} icon={IconeCerimonia} name='casamentos' link='/casamentos'></MetricOverview>
                     <MetricOverview data={{ stat: this.totalUsers, about: 'Usuários Cadastrados' }} icon={IconeNoivos} name='usuários' link='/usuarios'></MetricOverview>
                     <MetricOverview data={{ stat: 58, about: 'Fornecedores Cadastrados' }} icon={IconeFornecedores} name='fornecedores' link='/fornecedores'></MetricOverview>
@@ -281,7 +329,7 @@ export default class Dashboard extends Component {
                                     <th>Id</th>
                                     <th>Data</th>
                                     <th>Casal</th>
-                                    <th>Fornecedor</th>
+                                    <th>Estilo</th>
                                     <th>Usuário</th>
                                 </tr>
                             </thead>
@@ -316,12 +364,32 @@ export default class Dashboard extends Component {
                         <div className="spacer-3"></div>
                         <div className="has-text-right">
                             <Link to='/casamentos'>
-                                <button className="button is-primary">Ver todos os dados de casamentos</button>
+                                <button className="button is-primary">Ver todos os dados de Agendamentos</button>
                             </Link>
                         </div>
                     </Box>
                     <Box title='Faturas recentes'>
-                        
+                        <table className='table'>
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Data</th>
+                                    <th>Valor Total</th>
+                                    <th>Valor do Fornecedor</th>
+                                    <th>Categoria</th>
+                                    <th>Casamento</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.renderLastInvoices()}
+                            </tbody>
+                        </table>
+                        <div className="spacer-3"></div>
+                        <div className="has-text-right">
+                            <Link to='/casamentos'>
+                                <button className="button is-primary">Ver todos os dados de casamentos</button>
+                            </Link>
+                        </div>
                     </Box>
                     <Box title='Tabela 3'></Box>
                 </div>

@@ -9,6 +9,18 @@
 
     tr {
         line-height: 30px;
+
+        &:hover {
+            background-color: rgba(0,0,0,0.025);
+        }
+
+        td {
+            padding-right: 10px;
+
+            &:hover {
+                background-color: rgba(0,0,0,0.025);
+            }
+        }
     }
 
     tbody {

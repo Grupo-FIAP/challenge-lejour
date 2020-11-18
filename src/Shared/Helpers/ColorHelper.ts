@@ -12,7 +12,6 @@ export default class ColorHelper {
         const rgb = this.hexToRgb( hex );
         if( asStyleValue ) {
             const strvalue = `rgba(${rgb?.r}, ${rgb?.g}, ${rgb?.b}, ${opacity})`;
-            console.log( strvalue );
             return strvalue;
         }
 

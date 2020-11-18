@@ -20,11 +20,8 @@ export class InvoiceService {
             );
 
             return newInvoice;
-        });
+        }).sort((a, b) => b.CreatedAt.getTime() - a.CreatedAt.getTime() );
 
-        console.log('invoices');
-
-        console.log( this.invoices.map( x => x.CreatedAt ) );
         // this.invoices = this.invoices.sort( (a, b) => b.CreatedAt < a.CreatedAt );
     }
     
@@ -45,5 +42,14 @@ export class InvoiceService {
 
     GetLast10() {
         return this.invoices.slice( 0, 10 );
+    }
+
+    GetByMonth( month, year ) {
+        const invoicesByMonth = this.invoices.filter(
+            x => x.CreatedAt.getMonth() === month 
+                && x.CreatedAt.getFullYear() === year 
+                && x.Accepted === true
+        );
+        return invoicesByMonth;
     }
 }
