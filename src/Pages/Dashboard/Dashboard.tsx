@@ -93,6 +93,7 @@ export default class Dashboard extends Component {
             let valueThisMonth = 0;
 
             invoicesMonth = this.invoiceService.GetByMonth( x.month, x.year );
+            let invoicesQuantity = invoicesMonth.length;
             invoicesMonth.forEach( x => {
                 valueThisMonth += x.Amount;
             });
@@ -100,12 +101,13 @@ export default class Dashboard extends Component {
             const thisMonth = {
                 month: x.month,
                 year: x.year,
-                value: valueThisMonth
+                value: valueThisMonth,
+                quantity: invoicesQuantity
             };
             
             invoicePerMonth.push( thisMonth );
         });
-        console.log( invoicePerMonth );
+        const invoiceChartData = invoicePerMonth.map( x => x.quantity );
         
 
         const chart = new Chart(this.chartRef.current, {
@@ -134,8 +136,8 @@ export default class Dashboard extends Component {
                     // backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.2, true ).toString(),
                     backgroundColor: 'transparent'
                 }, {
-                    label: 'Faturamento',
-                    data: invoicePerMonth.map( x => x.value ),
+                    label: 'Faturamentos concretizados',
+                    data: invoiceChartData,
                     // borderColor: ChartColors[colorIndex],
                     borderColor: ChartColors[colorIndex++],
                     // backgroundColor: ColorHelper.hexToRgba( ChartColors[colorIndex++], 0.2, true ).toString(),
