@@ -72,19 +72,7 @@ export default class Dashboard extends Component {
     componentDidMount() {
         const lastMonths = DateHelper.GetLastMonthsObject(6, true);
 
-
-        const last6Months = DateHelper.GetLastMonths(6, true);
-        const randomNumbers = (quantity, range, minimum = 0) => {
-            const result: number[] = [];
-
-            for (let i = 0; i < quantity; i++) {
-                result.push(Math.random() * range);
-            }
-
-            return result;
-        }
         let colorIndex = 0;
-
 
         const invoicePerMonth: any[] = [];
         const usersPerMonth: any[] = [];

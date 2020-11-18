@@ -5,21 +5,23 @@ import DashboardViewport from '../../Components/Layout/DashboardViewport'
 import MetricOverview from '../../Components/Layout/MetricOverview'
 import Menu from '../../Components/Menu/Menu'
 
+import IconeFornecedores from '../../assets/icons/icone_fornecedores.svg';
+
 export default class Fornecedores extends Component {
+
     render() {
         return (
             <DashboardViewport title="Fornecedores">
 
                 <div className="columns cols-4">
-                    <MetricOverview data={{ stat: 533, about: 'Usuários Cadastrados Hoje' }} name='usuários' link='/usuarios'></MetricOverview>
-                    <MetricOverview data={{ stat: 230, about: 'Usuários Cadastrados em Novembro' }} name='casamentos' link='/casamentos'></MetricOverview>
-                    <MetricOverview data={{ stat: 58, about: 'Usuários Cadastrados em Outubro' }} name='fornecedores' link='/fornecedores'></MetricOverview>
-                    <MetricOverview data={{ stat: 500, about: 'Crescimento médio' }} name='Vendas' link='/vendas'></MetricOverview>
+                    <MetricOverview data={{ stat: 533, about: 'Fornecedores Cadastrados' }} icon={IconeFornecedores} name='usuários'></MetricOverview>
+                    <MetricOverview data={{ stat: 230, about: 'Fornecedores Cadastrados em Novembro' }} icon={IconeFornecedores} name='casamentos'></MetricOverview>
+                    <MetricOverview data={{ stat: 58, about: 'Fornecedores Cadastrados nos últimos 6 meses' }} icon={IconeFornecedores} name='fornecedores'></MetricOverview>
+                    <MetricOverview data={{ stat: 500, about: 'Fornecedores Cadastrados nos últimos 12 meses' }} icon={IconeFornecedores} name='Vendas'></MetricOverview>
                 </div>
 
                 <div className="columns cols-2">
-                    <Box title='Usuários Cadastrados em Novembro'></Box>
-                    <Box title='Usuários Cadastrados'></Box>
+                    <Box customStyle={{ gridColumn: '1 / span 2'}} title='Fornecedores Cadastrados'></Box>
                 </div>
             </DashboardViewport>
         )

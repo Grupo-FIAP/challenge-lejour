@@ -49,6 +49,6 @@ export class DateHelper {
 
             months.push( newMonth );
         }
-        return months;
+        return months.reverse();
     }
 }

@@ -27,3 +27,16 @@
         grid-template-columns: repeat(6, 1fr);
     }
 }
+
+.scroll-box {
+    overflow-y: scroll;
+    max-height: 400px;
+
+    .table {
+        thead tr th {
+            background-color: #fff;
+            position: sticky;
+            top: 0;
+        }
+    }
+}

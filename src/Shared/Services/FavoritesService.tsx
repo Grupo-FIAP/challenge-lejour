@@ -8,6 +8,10 @@ export class FavoritesService {
         this.favorites = FavoritesData;
     }
 
+    GetAll() {
+        return this.favorites;
+    }
+
     GetCount() {
         return this.favorites.length;
     }

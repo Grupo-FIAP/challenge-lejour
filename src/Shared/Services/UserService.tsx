@@ -13,6 +13,7 @@ export class UserService {
             const newEmail = NameGeneratorHelper.GetEmailFromName( newName );
 
             const spouseNewName = NameGeneratorHelper.GetRandomName();
+            const origens = ['Google adwords', 'Facebook Ads', 'Organico', 'Indicação'];
 
             let newUser: UserModel = new UserModel(
                 x.ID,
@@ -20,7 +21,8 @@ export class UserService {
                 newName,
                 newEmail,
                 '00 90000-0000',
-                spouseNewName
+                spouseNewName,
+                origens[ Math.floor( Math.random() * origens.length )]
             );
 
             this.users.push( newUser );
@@ -31,6 +33,10 @@ export class UserService {
             // to get a value that is either negative, positive, or zero.
             return new Date(b.CreatedAt).getTime() - new Date(a.CreatedAt).getTime();
           });
+    }
+
+    GetAll() {
+        return this.users;
     }
 
     GetById( id ) {

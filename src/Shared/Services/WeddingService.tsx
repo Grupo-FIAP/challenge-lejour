@@ -18,6 +18,10 @@ export class WeddingService {
         }).sort((a, b) => b.WeddingDate.getTime() - a.WeddingDate.getTime());
     }
 
+    GetAll() {
+        return this.weddings;
+    }
+
     GetById() {
         
     }

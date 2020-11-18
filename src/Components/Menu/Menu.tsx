@@ -12,6 +12,9 @@ export default class Menu extends Component {
                 </div>
                 <div>
                     <ul className='links'>
+                        <Link to='/dashboard'>
+                            <li>Visão Geral</li>
+                        </Link>
                         <Link to='/usuarios'>
                             <li>Usuários</li>
                         </Link>

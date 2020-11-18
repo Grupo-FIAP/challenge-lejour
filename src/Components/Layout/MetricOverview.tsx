@@ -8,7 +8,7 @@ type Props = {
         stat?
         about?
     },
-    link
+    link?
 }
 
 export default class MetricOverview extends Component<Props> {
@@ -20,6 +20,18 @@ export default class MetricOverview extends Component<Props> {
 
     constructor(props) {
         super(props);
+    }
+
+    renderAction() {
+        if( this.props.link ) {
+            return <section className="actions has-text-centered">
+                <Link to={this.props.link}>
+                    Ver tudo sobre {this.props.name}
+                </Link>
+            </section>
+        }
+
+        return;
     }
 
     render() {
@@ -34,11 +46,7 @@ export default class MetricOverview extends Component<Props> {
                         <div className='about'>{ this.props.data.about }</div>
                     </div>
                 </section>
-                <section className="actions has-text-centered">
-                    <Link to={this.props.link}>
-                        Ver tudo sobre {this.props.name}
-                    </Link>
-                </section>
+                { this.renderAction() }
             </div>
         )
     }

@@ -22,6 +22,10 @@ export class AppointmentService {
         }).sort( (a, b) => b.CreatedAt.getTime() - a.CreatedAt.getTime());
     }
 
+    GetAll() {
+        return this.appointment;
+    }
+
     GetCount() {
         return this.appointment.length;
     }

@@ -3,11 +3,12 @@ import Menu from '../Menu/Menu'
 import Breadcrumb from './Breadcrumb'
 
 type Props = {
-    title
+    title,
+    breadcrumb?
 }
 
 export default class DashboardViewport extends Component<Props> {
-
+    
     
     render() {
         return (
@@ -15,7 +16,7 @@ export default class DashboardViewport extends Component<Props> {
                 <Menu/>
                 <div className="dashboard-viewport">
                     <h1>{ this.props.title }</h1>
-                    <Breadcrumb></Breadcrumb>
+                    <Breadcrumb route={this.props.breadcrumb}></Breadcrumb>
                     { this.props.children }
                 </div>
             </>

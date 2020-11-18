@@ -5,6 +5,7 @@ export class UserModel {
         public Name,
         public Username,
         public Phone,
-        public SpouseName
+        public SpouseName,
+        public Origem
     ){}
 }

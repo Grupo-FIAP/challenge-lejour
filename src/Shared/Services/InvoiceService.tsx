@@ -39,6 +39,10 @@ export class InvoiceService {
     GetCount() {
         return this.invoices.length;
     }
+    
+    GetAll() {
+        return this.invoices;
+    }
 
     GetLast10() {
         return this.invoices.slice( 0, 10 );
