@@ -1,9 +1,10 @@
 export class UserModel {
     constructor(
         public Id,
-        public CreatedAt,
+        public CreatedAt: Date,
         public Name,
         public Username,
-        public Phone
+        public Phone,
+        public SpouseName
     ){}
 }

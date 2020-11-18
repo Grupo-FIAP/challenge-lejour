@@ -1,5 +1,6 @@
 @mixin default-box-shadow {
-    box-shadow: 0 0 2px rgba(66,66,66,.05), 0 0 4px rgba(97,97,97,.05), 0 0 8px rgba(66,66,66,.05), 0 0 16px rgba(33,33,33,.05), 0 0 32px rgba(97,97,97,.05);
+    // box-shadow: 0 0 2px rgba(66,66,66,.05), 0 0 4px rgba(97,97,97,.05), 0 0 8px rgba(66,66,66,.05), 0 0 16px rgba(33,33,33,.05), 0 0 32px rgba(97,97,97,.05);
+    box-shadow: 0 10px 31px rgba( 88, 88, 88, 0.1);
 }
 
 @import './Helpers/colors';

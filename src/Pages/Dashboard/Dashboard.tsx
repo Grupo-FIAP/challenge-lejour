@@ -23,6 +23,7 @@ import { FavoritesService } from '../../Shared/Services/FavoritesService';
 import { AppointmentService } from '../../Shared/Services/AppointmentService';
 import { UserModel } from '../../Shared/Models/user';
 import DashboardViewport from '../../Components/Layout/DashboardViewport';
+import { WeddingModel } from '../../Shared/Models/wedding';
 
 export default class Dashboard extends Component {
 
@@ -36,6 +37,7 @@ export default class Dashboard extends Component {
     // Referente a casamentos
     weddingService: WeddingService;
     totalWeddings;
+    nextWeddings;
 
     // Referente a invoice
     invoiceService: InvoiceService;
@@ -128,28 +130,6 @@ export default class Dashboard extends Component {
     }
 
     renderLastUsers() {
-        let html;
-
-        // <thead>
-        //     <tr>
-        //         <th>#</th>
-        //         <th>Nome</th>
-        //         <th>E-mail</th>
-        //         <th>Telefone</th>
-        //         <th>Origem</th>
-        //     </tr>
-        // </thead>
-
-        // this.last10Users.forEach(x => {
-        //     html += <tr>
-        //         <td>{x.Id}</td>
-        //         <td>{x.Name}</td>
-        //         <td>{x.Username}</td>
-        //         <td>{x.Phone}</td>
-        //         <td>{x.CreatedAt}</td>
-        //     </tr>
-
-        // });
         return this.last10Users.map( user => {
             const { Id, Name, Username, CreatedAt, Phone } = user;
 
@@ -159,7 +139,7 @@ export default class Dashboard extends Component {
                     <td>{Name}</td>
                     <td>{Username}</td>
                     <td>{Phone}</td>
-                    <td>{CreatedAt}</td>
+                    <td>{CreatedAt.toLocaleDateString()}</td>
                 </tr>
             )
         });
@@ -167,6 +147,23 @@ export default class Dashboard extends Component {
 
     setupWeddingsData() {
         this.totalWeddings = this.weddingService.GetCount();
+        this.nextWeddings = this.weddingService.GetLast10();
+    }
+
+    renderNextWeddings() {
+        return this.nextWeddings.map( (wedding: WeddingModel) => {
+            const { Id, Couple, WeddingDate } = wedding;
+
+            return (
+                <tr>
+                    <td>{Id}</td>
+                    <td>{WeddingDate.toLocaleDateString()}</td>
+                    <td>{ wedding.GetCoupleName() }</td>
+                    <td>Local</td>
+                    <td>Fornecedor</td>
+                </tr>
+            )
+        });
     }
 
     setupInvoicesData() {
@@ -254,37 +251,23 @@ export default class Dashboard extends Component {
                         <table className='table'>
                                 <thead>
                                     <tr>
+                                        <th>Id</th>
                                         <th>Data</th>
                                         <th>Casal</th>
-                                        <th>Local</th>
                                         <th>Fornecedor</th>
-                                        <th>Origem</th>
+                                        <th>Usuário</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>00/00/0000</td>
-                                        <td>João & Maria</td>
-                                        <td>email@teste.com</td>
-                                        <td>11 99887-5544</td>
-                                        <td>Google Adwords</td>
-                                    </tr>
-                                    <tr>
-                                        <td>00/00/0000</td>
-                                        <td>Paulo & Pedro</td>
-                                        <td>email@teste.com</td>
-                                        <td>11 99887-5544</td>
-                                        <td>Google Adwords</td>
-                                    </tr>
-                                    <tr>
-                                        <td>00/00/0000</td>
-                                        <td>Sueli & Cassandra</td>
-                                        <td>email@teste.com</td>
-                                        <td>11 99887-5544</td>
-                                        <td>Google Adwords</td>
-                                    </tr>
+                                    { this.renderNextWeddings() }
                                 </tbody>
                             </table>
+                            <div className="spacer-3"></div>
+                            <div className="has-text-right">
+                                <Link to='/casamentos'>
+                                    <button className="button is-primary">Ver todos os dados de casamentos</button>
+                                </Link>
+                            </div>
                         </Box>
                     </div>
 

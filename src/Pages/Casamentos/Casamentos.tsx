@@ -8,7 +8,7 @@ import Menu from '../../Components/Menu/Menu'
 export default class Casamentos extends Component {
     render() {
         return (
-            <DashboardViewport title="Fornecedores">
+            <DashboardViewport title="Casamentos">
 
                 <div className="columns cols-4">
                     <MetricOverview data={{ stat: 533, about: 'Usuários Cadastrados Hoje' }} name='usuários' link='/usuarios'></MetricOverview>

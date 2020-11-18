@@ -11,7 +11,7 @@ export class InvoiceService {
             let newInvoice: InvoiceModel = new InvoiceModel(
                 x.ACCEPTED == 'TRUE',
                 x.AMOUNT,
-                x.CREATED_AT,
+                new Date(x.CREATED_AT),
                 x.ID,
                 x.VENDOR_AMOUNT,
                 x.VENDOR_CATEGORY,
@@ -21,6 +21,11 @@ export class InvoiceService {
 
             return newInvoice;
         });
+
+        console.log('invoices');
+
+        console.log( this.invoices.map( x => x.CreatedAt ) );
+        // this.invoices = this.invoices.sort( (a, b) => b.CreatedAt < a.CreatedAt );
     }
     
     GetTotalAmount() {

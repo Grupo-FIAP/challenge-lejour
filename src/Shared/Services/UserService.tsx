@@ -12,16 +12,29 @@ export class UserService {
             const newName = NameGeneratorHelper.GetRandomName();
             const newEmail = NameGeneratorHelper.GetEmailFromName( newName );
 
+            const spouseNewName = NameGeneratorHelper.GetRandomName();
+
             let newUser: UserModel = new UserModel(
                 x.ID,
-                x.CREATED_AT,
+                new Date(x.CREATED_AT),
                 newName,
                 newEmail,
-                '00 90000-0000'
+                '00 90000-0000',
+                spouseNewName
             );
 
             this.users.push( newUser );
         })
+
+        this.users = this.users.sort(function(a,b){
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            return new Date(b.CreatedAt).getTime() - new Date(a.CreatedAt).getTime();
+          });
+    }
+
+    GetById( id ) {
+        return this.users.find( x => x.Id === id );
     }
 
     GetCount() {

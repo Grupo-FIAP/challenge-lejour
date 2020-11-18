@@ -1,11 +1,25 @@
 import AppointmentData from '../../requests/appointments.json';
+import { AppointmentModel } from '../Models/appointment';
 
 export class AppointmentService {
 
-    private appointment: any[];
+    private appointment: AppointmentModel[];
 
     constructor() {
-        this.appointment = AppointmentData;
+        const rawData = AppointmentData;
+        this.appointment = rawData.map( x => {
+            const newAppointment = new AppointmentModel(
+                x.ID,
+                x.WEDDING_ID,
+                x.VENDOR_ID,
+                x.STATUS,
+                x.VENDOR_CATEGORY,
+                x.BEGINS_AT,
+                x.CREATED_AT
+            );
+
+            return newAppointment;
+        });
     }
 
     GetCount() {
