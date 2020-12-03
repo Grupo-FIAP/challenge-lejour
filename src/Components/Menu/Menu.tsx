@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
+import logo from '../../assets/identity/logo-lejour.png';
 
 export default class Menu extends Component {
     render() {
@@ -7,12 +8,12 @@ export default class Menu extends Component {
             <nav className='dashboard-main-menu'>
                 <div>
                     <Link to='/dashboard'>
-                        Lejour Dashboard
+                        <img src={logo} alt="" height='40'/>
                     </Link>
                 </div>
                 <div>
                     <ul className='links'>
-                        <Link to='/dashboard'>
+                        <Link to='/dashboard' activeClassName="active">
                             <li>Visão Geral</li>
                         </Link>
                         <Link to='/usuarios'>

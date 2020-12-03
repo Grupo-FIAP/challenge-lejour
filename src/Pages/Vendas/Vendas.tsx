@@ -10,6 +10,7 @@ import IconeOrcamento from '../../assets/icons/icone_orcamento.svg';
 import { DateHelper } from '../../Shared/Helpers/DateHelper'
 import { InvoiceModel } from '../../Shared/Models/invoice'
 import ChartColors from '../../Shared/Helpers/ChartColors'
+import ChartOptions from '../../Shared/Helpers/ChartOptions'
 
 export default class Vendas extends Component {
 
@@ -125,8 +126,7 @@ export default class Vendas extends Component {
                     },
                 ],
             },
-            options: {
-            }
+            options: ChartOptions
         });
     }
 

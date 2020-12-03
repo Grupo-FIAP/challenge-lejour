@@ -27,6 +27,7 @@ import { WeddingModel } from '../../Shared/Models/wedding';
 import { AppointmentModel } from '../../Shared/Models/appointment';
 import { InvoiceModel } from '../../Shared/Models/invoice';
 import { FormatHelper } from '../../Shared/Helpers/FormatHelper';
+import ChartOptions from '../../Shared/Helpers/ChartOptions';
 
 export default class Dashboard extends Component {
 
@@ -164,8 +165,7 @@ export default class Dashboard extends Component {
                 }
                 ],
             },
-            options: {
-            }
+            options: ChartOptions
         });
 
 
@@ -181,15 +181,16 @@ export default class Dashboard extends Component {
 
     renderLastUsers() {
         return this.last10Users.map(user => {
-            const { Id, Name, Username, CreatedAt, Phone } = user;
+            const { Id, Name, Username, CreatedAt, Phone, Origem } = user;
 
             return (
                 <tr>
                     <td>{Id}</td>
+                    <td>{CreatedAt.toLocaleDateString()}</td>
                     <td>{Name}</td>
                     <td>{Username}</td>
                     <td>{Phone}</td>
-                    <td>{CreatedAt.toLocaleDateString()}</td>
+                    <td>{Origem}</td>
                 </tr>
             )
         });
@@ -298,7 +299,7 @@ export default class Dashboard extends Component {
 
             <DashboardViewport title="Visão Geral">
                 <div className="columns cols-4">
-                    <MetricOverview data={{ stat: 'R$ ' + this.totalInvoices.toFixed(2), about: 'em Vendas Totais' }} icon={IconeOrcamento} name='Vendas' link='/vendas'></MetricOverview>
+                    <MetricOverview data={{ stat: FormatHelper.CurrencyFormat(this.totalInvoices), about: 'em Vendas Totais' }} icon={IconeOrcamento} name='Vendas' link='/vendas'></MetricOverview>
                     <MetricOverview data={{ stat: this.totalWeddings, about: 'Casamentos Realizados' }} icon={IconeCerimonia} name='casamentos' link='/casamentos'></MetricOverview>
                     <MetricOverview data={{ stat: this.totalUsers, about: 'Usuários Cadastrados' }} icon={IconeNoivos} name='usuários' link='/usuarios'></MetricOverview>
                     <MetricOverview data={{ stat: 58, about: 'Fornecedores Cadastrados' }} icon={IconeFornecedores} name='fornecedores' link='/fornecedores'></MetricOverview>
@@ -312,7 +313,7 @@ export default class Dashboard extends Component {
                         <h4>Metas de 2020</h4>
                         <GoalBar goalName='Faturamento total' goal={3000000} goalCurrent={this.totalInvoices} isCurrency={{ digits: 2, preffix: 'R$' }} ></GoalBar>
                         <div className="spacer-1"></div>
-                        <h4>Metas de Novembro</h4>
+                        <h4>Metas de Dezembro</h4>
                         <GoalBar goalName='Casamentos realizados' goal={50} goalCurrent={rnd(50, 10)} ></GoalBar>
                         <GoalBar goalName='Usuários cadastrados' goal={200} goalCurrent={rnd(100, 20)} ></GoalBar>
                         <GoalBar goalName='Fornecedores cadastrados' goal={5} goalCurrent={rnd(5, 0)} ></GoalBar>
@@ -326,6 +327,7 @@ export default class Dashboard extends Component {
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Data</th>
                                     <th>Nome</th>
                                     <th>E-mail</th>
                                     <th>Telefone</th>
@@ -339,7 +341,7 @@ export default class Dashboard extends Component {
                         <div className="spacer-3"></div>
                         <div className="has-text-right">
                             <Link to='/usuarios'>
-                                <button className="button is-primary">Ver todos os dados de Usuários</button>
+                                <button className="button is-secondary button-rounded">Ver todos os dados de Usuários</button>
                             </Link>
                         </div>
                     </Box>
@@ -361,7 +363,7 @@ export default class Dashboard extends Component {
                         <div className="spacer-3"></div>
                         <div className="has-text-right">
                             <Link to='/casamentos'>
-                                <button className="button is-primary">Ver todos os dados de Casamentos</button>
+                                <button className="button is-secondary button-rounded">Ver todos os dados de Casamentos</button>
                             </Link>
                         </div>
                     </Box>
@@ -385,7 +387,7 @@ export default class Dashboard extends Component {
                         <div className="spacer-3"></div>
                         <div className="has-text-right">
                             <Link to='/agendamentos'>
-                                <button className="button is-primary">Ver todos os dados de Agendamentos</button>
+                                <button className="button is-secondary button-rounded">Ver todos os dados de Agendamentos</button>
                             </Link>
                         </div>
                     </Box>
@@ -408,7 +410,7 @@ export default class Dashboard extends Component {
                         <div className="spacer-3"></div>
                         <div className="has-text-right">
                             <Link to='/vendas'>
-                                <button className="button is-primary">Ver todos os dados de Vendas</button>
+                                <button className="button is-secondary button-rounded">Ver todos os dados de Vendas</button>
                             </Link>
                         </div>
                     </Box>

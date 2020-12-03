@@ -18,4 +18,13 @@
             @include goiaba-gradient;
         }
     }
+
+    &.is-secondary {
+        background-color: $color-verde-agua;
+        color: $color-branco;
+
+        &.is-gradient {
+            @include goiaba-gradient;
+        }
+    }
 }
